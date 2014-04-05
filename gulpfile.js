@@ -28,6 +28,8 @@ var gutil      = require('gulp-util'),
 	browserSync = require('browser-sync');
 
 	require('gulp-grunt')(gulp); 
+
+	var shell = require('gulp-shell');
 	
 
 	var	settings = {
@@ -406,4 +408,14 @@ var gutil      = require('gulp-util'),
 	    });
 	});
 
+
+/*============================================================
+=                       Deploy to server                     =
+============================================================*/
+
+gulp.task('deploy:vps', shell.task([
+	'ssh root@37.46.136.167 "mkdir -p ~/../../var/www/multiplay-workout"',
+	'sudo scp -r $PWD/build/* root@37.46.136.167:~/../../var/www/multiplay-workout',
+	'echo Your build has been succesfully deployed!'
+]))
 
