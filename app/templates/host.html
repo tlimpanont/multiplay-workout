@@ -1,0 +1,93 @@
+<section class="host container" ng-controller="HostCtrl">
+
+    <!--============= views.name = "qrcodeHost" ============= -->
+    <div ng-if="(views.name == 'qrcodeHost')">
+        <h1>{{views.name}}</h1>
+
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>{{qrcode.data | decode}}</p>
+                <img ng-src="{{qrcode.imageUrl}}" alt="Qrcode for Game Session ID {{session.$id}} " />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6" ng-repeat="player in players">
+                <div ng-if="!player.hasJoinedGame">
+                    <h3 class="text-center">Wait for challenger</h3>
+                    <center>
+                        <img class="text-center" src="images/ajax-loader.gif" alt="Waiting for challenger loader" />
+                    </center>  
+                </div>
+                <div ng-if="player.hasJoinedGame">
+                    <h3 class="text-center">{{player.id}} joins the game</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--============= END VIEW ============= -->
+
+
+    <!--============= views.name = "chooseWorkoutTime" ============= -->
+    <div ng-if="(views.name == 'chooseWorkoutTime')">
+        <h3>Choose your workout time</h3>
+        <div class="row">
+            <div class="col-md-4" ng-repeat="time in workoutTimes">
+                <button type="button" ng-class="{ 'active' : time.active }" class="btn btn-default btn-lg btn-block" ng-click="setWorkoutTime($index)">{{time.minutes}} mins</button>
+            </div>
+        </div>
+    </div>
+    <!--============= END VIEW ============= -->
+
+    <!--============= views.name = "getReady" ============= -->
+    <div ng-if="(views.name == 'getReady')">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Game tutorial</h1>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>   
+            </div> 
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-default btn-lg btn-block" ng-click="startGame()">We're ready to rock! </button>
+            </div>
+        </div>
+
+
+    </div>
+    <!--============= END VIEW ============= -->
+
+
+    <!--============= views.name = "gamePlay" ============= -->
+    <div ng-if="(views.name == 'gamePlay')">
+        <div class="row">
+            <div class="col-md-6" ng-repeat="player in players">
+            <h1 class="text-center">{{player.id}}</h1>
+               <div ng-if="!player.exercise" data-vCenter>
+                    <p class="text-center">Shake your phone to get your exercise</p>
+                </div>
+                <div ng-if="player.exercise">
+                    <h3 class="text-center">{{player.exercise.name}}</h3>
+                    <div ng-if="player.exercise.repetitions">
+                        <p class="text-center">{{player.exercise.repetitions}} X</p>
+                        <p class="text-center">Shake your phone to move on to the next exercise</p>
+                    </div> 
+                    <div ng-if="player.exercise.time">
+                        <p class="text-center">Exercise mode: TIME! Your phone is your timer</p>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--============= END VIEW ============= -->
+
+</section>
