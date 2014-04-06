@@ -50,24 +50,11 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
         
 
         $scope.players.$on('change', function(playerId) {
+             
+            var  playerConnected = _.countBy($scope.players, function(player) {
+                return player.hasJoinedGame;
+            }).true;
 
-            if($scope.players[playerId].hasJoinedGame)
-            {
-                playerConnected++;
-            }
-            else
-            {
-                if(playerConnected > 0)
-                {
-                    playerConnected--;
-
-                }
-                else
-                {
-                    playerConnected = 0;
-                }
-
-            }
             // if enough players than move to the section where we can choose workoutime
             if($scope.views.name === 'qrcodeHost' ) {
                 if(playerConnected >= config.maxPlayers)
