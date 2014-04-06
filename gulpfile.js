@@ -432,18 +432,26 @@ function dos_to_linux_path(dos_path) {
 /* Are we Windows platform?. PATH scripts should try to convert DOS path to LINUX path */
 if(isWin)
 {
-	gulp.task('deploy:vps', shell.task([
-		'ssh root@37.46.136.167 "mkdir -p ~/../../var/www/multiplay-workout"',
-		'scp -r '+dos_to_linux_path(__dirname)+'/build/* root@37.46.136.167:~/../../var/www/multiplay-workout',
-		'echo Your build has been succesfully deployed!'
-	]))
+	gulp.task('deploy:vps', function () {
+		gulp.run("build");
+		return gulp.src('')
+		.pipe(shell([
+		  	'ssh root@37.46.136.167 "mkdir -p ~/../../var/www/multiplay-workout"',
+			'scp -r '+dos_to_linux_path(__dirname)+'/build/* root@37.46.136.167:~/../../var/www/multiplay-workout',
+			'echo Your build has been succesfully deployed!'
+		]));
+	});
 }
 else
 {
-	gulp.task('deploy:vps', shell.task([
-		'ssh root@37.46.136.167 "mkdir -p ~/../../var/www/multiplay-workout"',
-		'sudo scp -r $PWD/build/* root@37.46.136.167:~/../../var/www/multiplay-workout',
-		'echo Your build has been succesfully deployed!'
-	]))
+	gulp.task('deploy:vps', function () {
+		gulp.run("build");
+		return gulp.src('')
+		.pipe(shell([
+		  	'ssh root@37.46.136.167 "mkdir -p ~/../../var/www/multiplay-workout"',
+			'sudo scp -r $PWD/build/* root@37.46.136.167:~/../../var/www/multiplay-workout',
+			'echo Your build has been succesfully deployed!'
+		]));
+	});
 }
 

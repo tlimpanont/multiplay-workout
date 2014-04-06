@@ -149,6 +149,16 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
         });
     })();
 
+     window.addEventListener('shake', shakeEventDidOccur, false);
+
+    //function to call when shake occurs
+    function shakeEventDidOccur () {
+        //put your own code here etc.
+        if (confirm("Ready to workout?")) {
+             $scope.requestExercise();     
+        }
+    }
+
      /*===== INTERACTIVITY HANDLERS ===== */
     $scope.requestExercise = function() {
     	var exercise = Factory.generateRandomExercise(); 
@@ -158,16 +168,24 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
 
         if(exercise.time !== undefined)
         {
-            $scope.exerciseSeconds = parseInt(exercise.time.seconds);
-            exerciseInterval = setInterval(function() {
-                if($scope.exerciseSeconds <= 0)
-                {
-                    $scope.player.$child("exercise").$remove();
-                    clearInterval(exerciseInterval);
-                }
-                $scope.exerciseSeconds--;
-                $scope.$apply();
-            } , 1000);
+            var time = exercise.time.seconds;
+            var duration = moment.duration(time * 1000, 'milliseconds');
+            var interval = 1000;
+            $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
+
+            setInterval(function(){
+                 $scope.$apply(function() {
+                    if(duration.asMilliseconds() <= 0)
+                    {
+                        $scope.player.$child("exercise").$remove();
+                        clearInterval(exerciseInterval);
+                        return;
+                    }   
+                    duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
+                    //show how many hours, minutes and seconds are left
+                    $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
+                 });
+            }, interval);
         }
         else
         {
@@ -203,7 +221,6 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
     $scope.workoutTime = $scope.session.$child('workoutTime');
     $scope.workoutTimes = Factory.getWorkoutTimes();
     $scope.exercises = Factory.getExercises();
-    $scope.secondsLeft = null;
 
     /* init values */
     var playerConnected = 0;
@@ -282,12 +299,24 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
                 break;
 
                 case 'gamePlay' :
-                    $scope.secondsLeft = $scope.workoutTime.seconds;
-                    gameInterval = setInterval(function() {
-                        $scope.$apply(function() {
-                            $scope.secondsLeft--;
-                        });
-                    }, 1000);
+                    var time = $scope.workoutTime.seconds;
+                    var duration = moment.duration(time * 1000, 'milliseconds');
+                    var interval = 1000;
+                    $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
+
+                    setInterval(function(){
+                         $scope.$apply(function() {
+                            if(duration.asMilliseconds() <= 0)
+                            {
+                                alert('Congratz! Your workout is finished');
+                                clearInterval(gameInterval);
+                                return;
+                            }   
+                            duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
+                            //show how many hours, minutes and seconds are left
+                            $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
+                         });
+                    }, interval);
                 break;
 
                 default :

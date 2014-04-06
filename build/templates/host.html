@@ -70,6 +70,10 @@
     <!--============= views.name = "gamePlay" ============= -->
     <div ng-if="(views.name == 'gamePlay')">
         <div class="row">
+           
+            <h1 class="text-center"> <i class="glyphicon glyphicon-time"></i>&nbsp; {{timeLeft}}</h1>
+        </div>
+        <div class="row">
             <div class="col-md-6" ng-repeat="player in players">
             <h1 class="text-center">{{player.id}}</h1>
                <div ng-if="!player.exercise" data-vCenter>

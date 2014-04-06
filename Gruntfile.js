@@ -39,7 +39,8 @@ module.exports = function (grunt) {
 			    "firebase",
 			    "angularfire",
 			    "underscore",
-			    "shake.js"
+			    "shake.js",
+			    "moment"
 		    ],
 		    dependencies: {
 				'modernizr': 'jquery',
