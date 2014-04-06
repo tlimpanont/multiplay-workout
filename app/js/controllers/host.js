@@ -66,7 +66,7 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
             }
             else 
             {
-                if(playerConnected <= 0 || playerConnected === undefined)
+                if(playerConnected <= 1 || playerConnected === undefined)
                 {
                     $scope.views.$set({
                         name: 'qrcodeHost'
