@@ -100,7 +100,7 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
                     var interval = 1000;
                     $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
 
-                    setInterval(function(){
+                    gameInterval = setInterval(function(){
                          $scope.$apply(function() {
                             if(duration.asMilliseconds() <= 0)
                             {

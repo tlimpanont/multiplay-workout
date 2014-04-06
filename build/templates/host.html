@@ -33,7 +33,7 @@
     <div ng-if="(views.name == 'chooseWorkoutTime')">
         <h3>Choose your workout time</h3>
         <div class="row">
-            <div class="col-md-4" ng-repeat="time in workoutTimes">
+            <div class="col-md-4" ng-repeat="time in workoutTimes" >
                 <button type="button" ng-class="{ 'active' : time.active }" class="btn btn-default btn-lg btn-block" ng-click="setWorkoutTime($index)">{{time.minutes}} mins</button>
             </div>
         </div>
@@ -70,23 +70,18 @@
     <!--============= views.name = "gamePlay" ============= -->
     <div ng-if="(views.name == 'gamePlay')">
         <div class="row">
-           
-            <h1 class="text-center"> <i class="glyphicon glyphicon-time"></i>&nbsp; {{timeLeft}}</h1>
+           <h1 class="text-center" style="font-size: 60px;"> <i class="glyphicon glyphicon-time"></i>&nbsp; {{timeLeft}}</h1>
         </div>
         <div class="row">
-            <div class="col-md-6" ng-repeat="player in players">
+            <div class="col-md-6 jumbotron" ng-repeat="player in players" style="border: 1px solid black;">
             <h1 class="text-center">{{player.id}}</h1>
-               <div ng-if="!player.exercise" data-vCenter>
-                    <p class="text-center">Shake your phone to get your exercise</p>
-                </div>
                 <div ng-if="player.exercise">
-                    <h3 class="text-center">{{player.exercise.name}}</h3>
+                    <h2 class="text-center" style="font-size: 40px;">{{player.exercise.name}}</h2>
                     <div ng-if="player.exercise.repetitions">
-                        <p class="text-center">{{player.exercise.repetitions}} X</p>
-                        <p class="text-center">Shake your phone to move on to the next exercise</p>
+                        <p class="text-center h1">{{player.exercise.repetitions}} X</p>
                     </div> 
-                    <div ng-if="player.exercise.time">
-                        <p class="text-center">Exercise mode: TIME! Your phone is your timer</p>
+                    <div ng-if="player.exercise.time" class="text-center">
+                        <i class="glyphicon glyphicon-time h1">&nbsp;</i>
                     </div> 
                 </div>
             </div>

@@ -46,11 +46,11 @@ app.run(['$rootScope', function ($rootScope) {
 }]);
 
 var str = document.URL;
-var res = str.replace(/(?=#).*\/?$/g,""); 
+var baseUrl = str.replace(/(?=#).*\/?$/g,""); 
 /* ---> Do not delete this comment (Values) <--- */
 app.constant('config', {
     firebaseUrl: 'https://multiplay-workout.firebaseio.com/',
-    clientLocation: res + '#/client/',
+    clientLocation: baseUrl + '#/client/',
     maxPlayers:2,
     generateSessionId: function() {
         return '_' + Math.random().toString(36).substr(2, 9);
