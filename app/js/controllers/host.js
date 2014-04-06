@@ -50,9 +50,9 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
         
 
         $scope.players.$on('change', function(playerId) {
-             
+
             var  playerConnected = _.countBy($scope.players, function(player) {
-                return player.hasJoinedGame;
+                return (player.hasJoinedGame);
             }).true;
 
             // if enough players than move to the section where we can choose workoutime
@@ -64,12 +64,14 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
                     });
                 }
             }
-
-            if(playerConnected <= 0)
+            else 
             {
-                $scope.views.$set({
-                    name: 'qrcodeHost'
-                });
+                if(playerConnected <= 0 || playerConnected === undefined)
+                {
+                    $scope.views.$set({
+                        name: 'qrcodeHost'
+                    });
+                }
             }
         });
     })();
