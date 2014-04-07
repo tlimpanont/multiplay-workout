@@ -2,21 +2,24 @@
 
     <!--============= views.name = "qrcodeHost" ============= -->
     <div ng-if="(views.name == 'qrcodeHost')">
-        <h1>{{views.name}}</h1>
-
         <div class="row">
             <div class="col-md-12 text-center">
-                <p>{{qrcode.data | decode}}</p>
-                <img ng-src="{{qrcode.imageUrl}}" alt="Qrcode for Game Session ID {{session.$id}} " />
+                 <h1 class="text-info"><i class="glyphicon glyphicon-user"></i><i class="glyphicon glyphicon-user"></i>&nbsp; MULTIPLAY WORKOUT GAME</h1>
+                <!-- <p>{{qrcode.data | decode}}</p> -->
+                <div style="background: url('images/iphone4.png') no-repeat transparent center center; height: 400px; margin-left: 70px;">
+                    <a href="{{qrcode.data | decode}}" target="_blank">
+                        <img ng-src="{{qrcode.imageUrl}}" alt="Qrcode for Game Session ID {{session.$id}} " style="margin-top: 110px;" />
+                    </a>
+                </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-6" ng-repeat="player in players">
+            <div class="col-md-5 text-center well col-md-offset-1" ng-repeat="player in players">
                 <div ng-if="!player.hasJoinedGame">
-                    <h3 class="text-center">Wait for challenger</h3>
+                    <h3>WAIT FOR CHALLENGER</h3>
                     <center>
-                        <img class="text-center" src="images/ajax-loader.gif" alt="Waiting for challenger loader" />
+                        <img src="images/ajax-loader.gif" alt="Waiting for challenger loader" />
                     </center>  
                 </div>
                 <div ng-if="player.hasJoinedGame">
@@ -31,10 +34,10 @@
 
     <!--============= views.name = "chooseWorkoutTime" ============= -->
     <div ng-if="(views.name == 'chooseWorkoutTime')">
-        <h3>Choose your workout time</h3>
         <div class="row">
-            <div class="col-md-4" ng-repeat="time in workoutTimes" >
-                <button type="button" ng-class="{ 'active' : time.active }" class="btn btn-default btn-lg btn-block" ng-click="setWorkoutTime($index)">{{time.minutes}} mins</button>
+            <h1 class="text-center"><i class="glyphicon glyphicon-time"></i>&nbsp; Please choose your workout time</h1>
+            <div class="col-xs-3 well text-center col-md-3" style="background: transparent !important; border: none !important; border-radius: none; -webkit-box-shadow: none; box-shadow: none;" ng-repeat="time in workoutTimes" >
+                <button type="button" ng-class="{ 'active' : time.active }" class="btn btn-info btn-lg btn-block" ng-click="setWorkoutTime($index)"><i  style="font-size: 25px;"class="glyphicon glyphicon-time"></i>&nbsp; <p>{{time.minutes}} mins</p></button>
             </div>
         </div>
     </div>
@@ -43,45 +46,32 @@
     <!--============= views.name = "getReady" ============= -->
     <div ng-if="(views.name == 'getReady')">
         <div class="row">
-            <div class="col-md-12">
-                <h1>Game tutorial</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>   
+            <div class="col-md-12 text-center">
+                <p class="h1 text-danger">GET READY</p>
+               <h1 style="font-size: 160px;">{{countToBegin}}</h1>
             </div> 
         </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-default btn-lg btn-block" ng-click="startGame()">We're ready to rock! </button>
-            </div>
-        </div>
-
-
     </div>
     <!--============= END VIEW ============= -->
 
 
     <!--============= views.name = "gamePlay" ============= -->
-    <div ng-if="(views.name == 'gamePlay')">
+    <div ng-if="(views.name == 'gamePlay')">    
         <div class="row">
            <h1 class="text-center" style="font-size: 60px;"> <i class="glyphicon glyphicon-time"></i>&nbsp; {{timeLeft}}</h1>
         </div>
         <div class="row">
-            <div class="col-md-6 jumbotron" ng-repeat="player in players" style="border: 1px solid black;">
-            <h1 class="text-center">{{player.id}}</h1>
+            <div class="col-md-6 text-center" ng-repeat="player in players" style="background: transparent !important; border: none !important; border-radius: none; -webkit-box-shadow: none; box-shadow: none;">
+                <div class="alert alert-info">
+                     <h1 style="font-size: 45px;"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
+                </div>
                 <div ng-if="player.exercise">
-                    <h2 class="text-center" style="font-size: 40px;">{{player.exercise.name}}</h2>
+                    <h2 style="font-size: 40px; font-weight: normal;">{{player.exercise.name}}</h2>
                     <div ng-if="player.exercise.repetitions">
-                        <p class="text-center h1">{{player.exercise.repetitions}} X</p>
+                        <p class="text-danger" style="font-size: 60px; font-weight: bold;">{{player.exercise.repetitions}} X</p>
                     </div> 
                     <div ng-if="player.exercise.time" class="text-center">
-                        <i class="glyphicon glyphicon-time h1">&nbsp;</i>
+                        <i class="glyphicon glyphicon-time h1 text-danger" style="font-size: 60px;"></i>
                     </div> 
                 </div>
             </div>

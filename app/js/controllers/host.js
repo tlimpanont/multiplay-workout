@@ -91,13 +91,26 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
                 break;
 
                 case 'getReady' :
+                    $scope.countToBegin = 5;
+                    var countToBeginInterval = setInterval(function() {
+                        $scope.$apply(function() {
+                            if($scope.countToBegin <= 1)
+                            {
+                                $scope.startGame();
+                                clearInterval(countToBeginInterval);
+                                return;
+                            }
+                            $scope.countToBegin--;
+                        });
 
+                    }, 1000);
                 break;
 
                 case 'gamePlay' :
                     var time = $scope.workoutTime.seconds;
                     var duration = moment.duration(time * 1000, 'milliseconds');
                     var interval = 1000;
+                    moment.duration(duration.asMilliseconds() - interval * 2, 'milliseconds');
                     $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
 
                     gameInterval = setInterval(function(){

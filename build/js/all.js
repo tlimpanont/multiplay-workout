@@ -149,14 +149,9 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
         });
     })();
 
-     window.addEventListener('shake', shakeEventDidOccur, false);
-
-    //function to call when shake occurs
     function shakeEventDidOccur () {
-        //put your own code here etc.
-        if (confirm("Ready to workout?")) {
-             $scope.requestExercise();     
-        }
+        $scope.requestExercise();
+        window.removeEventListener('shake', shakeEventDidOccur, false);
     }
 
      /*===== INTERACTIVITY HANDLERS ===== */
@@ -179,6 +174,7 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
                     {
                         $scope.player.$child("exercise").$remove();
                         clearInterval(exerciseInterval);
+                        window.addEventListener('shake', shakeEventDidOccur, false);
                         return;
                     }   
                     duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
@@ -189,6 +185,7 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
         }
         else
         {
+            window.addEventListener('shake', shakeEventDidOccur, false);
             clearInterval(exerciseInterval);
         }
     };
@@ -302,13 +299,26 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
                 break;
 
                 case 'getReady' :
+                    $scope.countToBegin = 5;
+                    var countToBeginInterval = setInterval(function() {
+                        $scope.$apply(function() {
+                            if($scope.countToBegin <= 1)
+                            {
+                                $scope.startGame();
+                                clearInterval(countToBeginInterval);
+                                return;
+                            }
+                            $scope.countToBegin--;
+                        });
 
+                    }, 1000);
                 break;
 
                 case 'gamePlay' :
                     var time = $scope.workoutTime.seconds;
                     var duration = moment.duration(time * 1000, 'milliseconds');
                     var interval = 1000;
+                    moment.duration(duration.asMilliseconds() - interval * 2, 'milliseconds');
                     $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
 
                     gameInterval = setInterval(function(){

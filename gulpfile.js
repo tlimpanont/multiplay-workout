@@ -436,7 +436,7 @@ if(isWin)
 		gulp.run("build");
 		return gulp.src('')
 		.pipe(shell([
-		  	'ssh root@37.46.136.167 "mkdir -p ~/../../var/www/multiplay-workout"',
+		  	'ssh root@37.46.136.167 "cd ~/../../var/www/; rm -rf multiplay-workout; mkdir multiplay-workout"',
 			'scp -r '+dos_to_linux_path(__dirname)+'/build/* root@37.46.136.167:~/../../var/www/multiplay-workout',
 			'echo Your build has been succesfully deployed!'
 		]));
@@ -448,7 +448,7 @@ else
 		gulp.run("build");
 		return gulp.src('')
 		.pipe(shell([
-		  	'ssh root@37.46.136.167 "mkdir -p ~/../../var/www/multiplay-workout"',
+		  	'ssh root@37.46.136.167 "cd ~/../../var/www/; rm -rf multiplay-workout; mkdir multiplay-workout"',
 			'sudo scp -r $PWD/build/* root@37.46.136.167:~/../../var/www/multiplay-workout',
 			'echo Your build has been succesfully deployed!'
 		]));

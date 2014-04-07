@@ -21,3 +21,6 @@
 .host {
 	
 }
+html, body {
+	background: url("../images/white_wall_hash.png") !important;
+}

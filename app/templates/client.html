@@ -1,15 +1,10 @@
 <section class="client container" ng-controller="ClientCtrl">
 	 <!--============= views.name = "qrcodeHost" ============= -->
     <div ng-if="(views.name == 'qrcodeHost')">
-        <h1>{{views.name}}</h1>
-
         <div class="row">
-            <div class="col-md-12">
-                <h1 ng-if="player">You'are player {{player.id}}</h1>
-                <div ng-if="!player">
-                    <h1>Plaese wait for free host session...</h1>
-                </div>
-
+            <div class="col-md-12 text-center">
+                <h1 class="text-info"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
+                <div class="alert alert-warning">Wait for your challenger...</div>
             </div>
         </div>
 
@@ -20,13 +15,9 @@
     <!--============= views.name = "chooseWorkoutTime" ============= -->
     <div ng-if="(views.name == 'chooseWorkoutTime')">
        <div class="row">
-            <div class="col-md-12">
-                <h1 ng-if="player" class="text-center">{{player.id}}</h1>
-                <p class="text-center">Please choose your workout time</p>
-                 <br>
-                <center>
-                    <img class="text-center" src="images/ajax-loader.gif" alt="Waiting for challenger loader" />
-                </center>  
+            <div class="col-md-12 text-center">
+                <h1 class="text-info"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
+                <div class="alert alert-info">Please choose your workout time</div>
             </div>
        </div>
     </div>
@@ -35,15 +26,9 @@
     <!--============= views.name = "getReady" ============= -->
     <div ng-if="(views.name == 'getReady')">
          <div class="row">
-            <div class="col-md-12">
-                <h1 ng-if="player" class="text-center">{{player.id}}</h1>
-                <p class="text-center">Let's get ready! Drink, some water, do some stretches....</p>
-                <p class="text-center"><strong>Good luck!</strong></p>
-                <br>
-
-                <center>
-                    <img src="images/ajax-loader.gif" alt="Waiting for challenger loader" />
-                </center>  
+            <div class="col-md-12 text-center">
+                <h1 class="text-center"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
+                <div class="alert alert-danger"><h3>Get Ready!</h3></div>
             </div> 
         </div>
     </div>
@@ -53,30 +38,44 @@
     <!--============= views.name = "gamePlay" ============= -->
     <div ng-if="(views.name == 'gamePlay')">
         <div class="row">
-            <div class="col-md-12">
-                <div ng-if="player.hasJoinedGame">
-                    <h1 class="text-center">{{player.id}}</h3>
-                    <div ng-if="!player.exercise" data-vCenter>
-                        <!-- <p class="text-center">Shake your phone to get your exercise</p> -->
-                        <p class="text-center">
-                            <img ng-if="isMobile()" class="thumbnail text-center" style="display:inline;" src="images/shake-instruction.jpg" alt="Shake to get your exercise">
-                        </p>                       
-                        <button ng-if="!isMobile()" type="button" ng-class="{ 'active' : time.active }" class="btn btn-default btn-lg btn-block" ng-click="requestExercise()">Give me an exercise!</button>
-                    </div>
+            <div class="col-md-12 text-center">
+                    <h1 class="text-info"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
+                    <!-- NO EXERCISE BEEN GIVEN -->
+                    <div ng-if="!player.exercise">
+                        <!-- if isMobile() -->
+                            <div ng-if="isMobile()">
+                                <img style="display:inline;" src="images/shake-instruction.png" alt="Shake to get your exercise"> 
+                                <div class="alert alert-info">Shake your phone!</div>                   
+                            </div>
+                        <!-- END -->
 
+                        <!-- if !isMobile() -->
+                            <div ng-if="!isMobile()">
+                                <button type="button" ng-class="{ 'active' : time.active }" class="btn btn-default btn-lg btn-block" ng-click="requestExercise()">Give me an exercise!</button>
+                            </div>
+                        <!-- END -->
+                        
+                    </div> 
+                    <!-- END -->
+                   
+                    <!-- EXERCISE IS GIVEN -->
                     <div ng-if="player.exercise">
-                        <h2 class="text-center" style="font-size: 40px;">{{player.exercise.name}}</h2>
+                        <!-- GO IN TO THE REPETITION MODE -->
                         <div ng-if="player.exercise.repetitions">
-                            <p class="text-center h1">{{player.exercise.repetitions}} X</p>
+                            <img src="images/working-out-smiley.png" alt="Working out smiley" />
                             <br>
                             <br>
                             <button ng-if="!isMobile()" type="button" ng-class="{ 'active' : time.active }" class="btn btn-default btn-lg btn-block" ng-click="requestExercise()">Move onto the next exercise</button>
-                        </div> 
+                        </div>   
+                        <!-- END -->
+
+                        <!-- GO IN TO THE REPETITION MODE -->
                         <div ng-if="player.exercise.time">
-                            <p class="text-center h1"><i class="glyphicon glyphicon-time"></i>&nbsp; {{timeLeft}}</p>
-                        </div> 
-                    </div>
-                </div>
+                            <p class="text-danger" style="font-size: 60px;"><i class="glyphicon glyphicon-time" ></i>&nbsp; {{timeLeft}}</p>
+                        </div>
+                        <!-- END -->
+                    </div> 
+                    <!-- END -->                 
             </div>
         </div>
     </div>

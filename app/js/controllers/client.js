@@ -89,14 +89,9 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
         });
     })();
 
-     window.addEventListener('shake', shakeEventDidOccur, false);
-
-    //function to call when shake occurs
     function shakeEventDidOccur () {
-        //put your own code here etc.
-        if (confirm("Ready to workout?")) {
-             $scope.requestExercise();     
-        }
+        $scope.requestExercise();
+        window.removeEventListener('shake', shakeEventDidOccur, false);
     }
 
      /*===== INTERACTIVITY HANDLERS ===== */
@@ -119,6 +114,7 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
                     {
                         $scope.player.$child("exercise").$remove();
                         clearInterval(exerciseInterval);
+                        window.addEventListener('shake', shakeEventDidOccur, false);
                         return;
                     }   
                     duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
@@ -129,6 +125,7 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
         }
         else
         {
+            window.addEventListener('shake', shakeEventDidOccur, false);
             clearInterval(exerciseInterval);
         }
     };
