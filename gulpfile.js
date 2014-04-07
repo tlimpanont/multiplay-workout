@@ -43,7 +43,8 @@ var gutil      = require('gulp-util'),
 			templates: 'app/templates/',				
 			images: 'app/images/',
 			fonts: 'app/fonts/',
-			bower: 'bower_components/'			
+			bower: 'bower_components/',
+			assets: 'app/assets/'		
 		},
 		build: {
 			app: 'build/',
@@ -52,7 +53,8 @@ var gutil      = require('gulp-util'),
 			templates: 'build/templates/',				
 			images: 'build/images/',
 			fonts: 'build/fonts/',
-			bower: 'bower_components/'			
+			bower: 'bower_components/',
+			assets: 'build/assets/'			
 		},
 		scss: 'scss/'  
 	};
@@ -181,7 +183,7 @@ var gutil      = require('gulp-util'),
 
 	gulp.task('copy', function() {
 	
-		gulp.run('copy:html', 'copy:images', 'copy:fonts', 'copy:html:root');
+		gulp.run('copy:html', 'copy:images', 'copy:fonts', 'copy:html:root', 'copy:assets');
 	});
 
 	
@@ -215,6 +217,13 @@ var gutil      = require('gulp-util'),
  		console.log('-------------------------------------------------- COPY :fonts');
 		gulp.src(settings.src.fonts+'*')
 			.pipe(gulp.dest(settings.build.fonts));
+	});
+
+	gulp.task('copy:assets', function() {
+
+ 		console.log('-------------------------------------------------- COPY :assets');
+		gulp.src(settings.src.assets+'*')
+			.pipe(gulp.dest(settings.build.assets));
 	});
 
 
@@ -282,7 +291,7 @@ var gutil      = require('gulp-util'),
 	
 		gulp.watch([settings.src.fonts+'*.*', settings.src.fonts+'**/*.*'], function() {
 			console.log('-------------------------------------------------- CHANGE /fonts/* File');
-			gulp.run('copy:fonts');
+			gulp.run('copy:fonts'); 
 		});
 	});
 

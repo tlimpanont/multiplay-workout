@@ -40,7 +40,11 @@ module.exports = function (grunt) {
 			    "angularfire",
 			    "underscore",
 			    "shake.js",
-			    "moment"
+			    "moment",
+			    "SoundJS",
+			    "createjs-soundjs",
+			    "PreloadJS",
+			    "createjs-preloadjs"
 		    ],
 		    dependencies: {
 				'modernizr': 'jquery',

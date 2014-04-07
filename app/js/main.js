@@ -56,5 +56,4 @@ app.constant('config', {
         return '_' + Math.random().toString(36).substr(2, 9);
     }
 });
-
 /* ---> Do not delete this comment (Constants) <--- */

@@ -4,7 +4,7 @@
 ==================================================================*/
 /*global app*/
 
-app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Player', 'Qrcode', 'Factory', function ($scope, $routeParams, config, $firebase, Player, Qrcode, Factory) {
+app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Player', 'Qrcode', 'Factory', 'SoundJS', function ($scope, $routeParams, config, $firebase, Player, Qrcode, Factory, SoundJS) {
 
 	'use strict';
 
@@ -100,6 +100,7 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
                                 clearInterval(countToBeginInterval);
                                 return;
                             }
+                            SoundJS.play("second-tick");
                             $scope.countToBegin--;
                         });
 
@@ -263,7 +264,5 @@ app.factory('Exercise', function () {
     };
     return Exercise;
 });
-
-
 /*-----  End of Controller = Host  ------*/
 
