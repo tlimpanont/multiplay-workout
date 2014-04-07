@@ -27,7 +27,7 @@
     <div ng-if="(views.name == 'getReady')">
          <div class="row">
             <div class="col-md-12 text-center">
-                <h1 class="text-center"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
+                <h1 class="text-info"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
                 <div class="alert alert-danger"><h3>Get Ready!</h3></div>
             </div> 
         </div>
@@ -45,7 +45,7 @@
                         <!-- if isMobile() -->
                             <div ng-if="isMobile()">
                                 <img style="display:inline;" src="images/shake-instruction.png" alt="Shake to get your exercise"> 
-                                <div class="alert alert-info">Shake your phone!</div>                   
+                                <div class="alert alert-info" ng-click="requestExercise()">Or press to shake</div>                 
                             </div>
                         <!-- END -->
 
@@ -62,10 +62,19 @@
                     <div ng-if="player.exercise">
                         <!-- GO IN TO THE REPETITION MODE -->
                         <div ng-if="player.exercise.repetitions">
-                            <img src="images/working-out-smiley.png" alt="Working out smiley" />
+                            <!-- <img src="images/working-out-smiley.png" alt="Working out smiley" /> -->
+                            <!-- <p class="text-danger" style="font-size: 60px;">WORK OUT, WORK OUT!</p> -->
+                            <!-- if isMobile() -->
+                            <div ng-if="isMobile()">
+                                <img style="display:inline;" src="images/shake-instruction.png" alt="Shake to get your exercise">
+                                <div class="alert alert-info" ng-click="requestExercise()">Or press to shake</div>               
+                                <!-- <div class="alert alert-info">Shake your phone!</div>                    -->
+                            </div>
+                            <!-- END -->
+
                             <br>
                             <br>
-                            <button ng-if="!isMobile()" type="button" ng-class="{ 'active' : time.active }" class="btn btn-default btn-lg btn-block" ng-click="requestExercise()">Move onto the next exercise</button>
+                            <button ng-if="!isMobile()" type="button" class="btn btn-default btn-lg btn-block" ng-click="requestExercise()">Move onto the next exercise</button>
                         </div>   
                         <!-- END -->
 

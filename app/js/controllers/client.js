@@ -88,45 +88,51 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
 
         });
     })();
+    
+    window.addEventListener('shake', shakeEventDidOccur, false);
 
     function shakeEventDidOccur () {
         $scope.requestExercise();
-        window.removeEventListener('shake', shakeEventDidOccur, false);
     }
 
      /*===== INTERACTIVITY HANDLERS ===== */
     $scope.requestExercise = function() {
     	var exercise = Factory.generateRandomExercise(); 
-        $scope.player.$update({
-    		exercise: exercise
-    	});
-
-        if(exercise.time !== undefined)
+        if(confirm('Ready to do ' + exercise.name + '?'))
         {
-            var time = exercise.time.seconds;
-            var duration = moment.duration(time * 1000, 'milliseconds');
-            var interval = 1000;
-            $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
+            $scope.player.$update({
+                exercise: exercise
+            });
 
-            exerciseInterval = setInterval(function(){
-                 $scope.$apply(function() {
-                    if(duration.asMilliseconds() <= 0)
-                    {
-                        $scope.player.$child("exercise").$remove();
-                        clearInterval(exerciseInterval);
-                        window.addEventListener('shake', shakeEventDidOccur, false);
-                        return;
-                    }   
-                    duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
-                    //show how many hours, minutes and seconds are left
-                    $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
-                 });
-            }, interval);
-        }
-        else
-        {
-            window.addEventListener('shake', shakeEventDidOccur, false);
-            clearInterval(exerciseInterval);
+            if(exercise.time !== undefined)
+            {   
+                window.removeEventListener('shake', shakeEventDidOccur, false);
+                var time = exercise.time.seconds;
+                var duration = moment.duration(time * 1000, 'milliseconds');
+                var interval = 1000;
+                $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
+
+                exerciseInterval = setInterval(function(){
+                     $scope.$apply(function() {
+                        if(duration.asMilliseconds() <= 0)
+                        {
+                            $scope.player.$child("exercise").$remove();
+                            clearInterval(exerciseInterval);
+                            window.addEventListener('shake', shakeEventDidOccur, false);
+                            return;
+                        }   
+                        duration = moment.duration(duration.asMilliseconds() - interval, 'milliseconds');
+                        //show how many hours, minutes and seconds are left
+                        $scope.timeLeft = moment(duration.asMilliseconds()).format('mm:ss');
+                     });
+                }, interval);
+
+                window.removeEventListener('shake', shakeEventDidOccur, false);
+            }
+            else
+            {
+                clearInterval(exerciseInterval);
+            }  
         }
     };
 
