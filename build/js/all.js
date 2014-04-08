@@ -153,12 +153,21 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
     function shakeEventDidOccur () {
         $scope.requestExercise();
     }
+    $scope.alerts = [];
 
-     /*===== INTERACTIVITY HANDLERS ===== */
+    /*===== INTERACTIVITY HANDLERS ===== */
     $scope.requestExercise = function() {
     	var exercise = Factory.generateRandomExercise(); 
-        if(confirm('Check the main screen to see your exercise'))
+       
+        if(confirm('Check the main screen for your exercise'))
         {
+            // $scope.alerts.push({type: 'info', msg: 'Check the main screen for your time or repetitions'});
+            // setTimeout(function() {
+            //     $scope.$apply(function() {
+            //         $scope.alerts = [];
+            //     });
+            // }, 3000);
+
             $scope.player.$update({
                 exercise: exercise
             });
@@ -175,8 +184,8 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
                      $scope.$apply(function() {
                         if(duration.asMilliseconds() <= 0)
                         {
-                            SoundJS.play("end-timer");
-                            $scope.player.$child("exercise").$remove();
+                            SoundJS.play('end-timer');
+                            $scope.player.$child('exercise').$remove();
                             clearInterval(exerciseInterval);
                             window.addEventListener('shake', shakeEventDidOccur, false);
                             return;
@@ -202,16 +211,16 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
 
 app.service('SoundJS', function() {
     // Create a single item to load.
-    var assetsPath = "assets/";
+    var assetsPath = 'assets/';
     
-    createjs.Sound.addEventListener("fileload", handleFileLoad);
+    createjs.Sound.addEventListener('fileload', handleFileLoad);
     function handleFileLoad(event) {
         // A sound has been preloaded.
-        console.log("Preloaded:", event.id, event.src);
+        console.log('Preloaded:', event.id, event.src);
     }
-    createjs.Sound.alternateExtensions = ["mp3"];
-    createjs.Sound.registerSound({id:"end-timer", src:assetsPath+"end-timer.ogg"});
-    createjs.Sound.registerSound({id:"second-tick", src:assetsPath+"second-tick.ogg"});
+    createjs.Sound.alternateExtensions = ['mp3'];
+    createjs.Sound.registerSound({id:'end-timer', src:assetsPath+'end-timer.ogg'});
+    createjs.Sound.registerSound({id:'second-tick', src:assetsPath+'second-tick.ogg'});
 
     this.play = function(name) {
         // Play the sound using the ID created above.
@@ -404,20 +413,31 @@ app.service('Factory', ['Time', 'Exercise', function(Time, Exercise) {
         },
         getExercises : function() {
             return [
+                new Exercise( 'Kettlebelt Squat Push Press (alternating)' , ''),
+                new Exercise('Jump Slam Battle Rope', ''),
+                new Exercise('Forward Lunge (alternating)', ''),
+                new Exercise('Backward Lunge (alternating)', ''),
+                new Exercise('Plyometric Jump', ''),
+                new Exercise('Split Jump', ''),
+                new Exercise( 'Mountain Climbers' , ''),
                 new Exercise( 'Push Ups' , ''),
                 new Exercise( 'Burpees' , ''),
                 new Exercise( 'Air Squat' , ''),
                 new Exercise( 'Frog Hop' , ''),
+                new Exercise('Dumbell Squat Push Press', ''),
+                new Exercise('Rope Skipping', ''),
+                new Exercise('Squat Thrust', ''),
+                new Exercise('Deadlift', ''),
                 new Exercise( 'Kettlebelt Swing' , ''),
-                new Exercise( 'Single Arm Kettlebelt Squat Push Press (alternating)' , ''),
-                new Exercise( 'Mountain Climbers' , ''),
+                new Exercise( 'Farmer Carry' , ''),
+                new Exercise( 'Sit Ups' , ''),
+                new Exercise( 'Squat Deck' , ''),
+                new Exercise('Left&Right Battle Rope', ''),
                 new Exercise( 'Prisoner Push Ups' , ''),
                 new Exercise( 'Prisoner Squat' , ''),
                 new Exercise( 'Squat Jump' , ''),
                 new Exercise( 'Bear Crawl' , ''),
-                new Exercise( 'Farmer Carry' , ''),
-                new Exercise( 'Sit Ups' , ''),
-                new Exercise( 'Squat Deck' , ''),
+                new Exercise('Deadlift High Pull', '')
             ]
         },
         getExerciseTimes : function() {
