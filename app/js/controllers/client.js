@@ -4,7 +4,7 @@
 ==================================================================*/
 /*global app*/
 
-app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Factory', 'isMobile', 'SoundJS', function ($scope, $routeParams, config, $firebase, Factory, isMobile, SoundJS) {
+app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Factory', 'isMobile', 'SoundJS', '$modal', function ($scope, $routeParams, config, $firebase, Factory, isMobile, SoundJS, $modal) {
 
 	'use strict';
 
@@ -19,6 +19,7 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
     $scope.isMobile = isMobile;
     var exerciseInterval = null;
     
+   
     /*===== STEP 1: Manage Player persistence ===== */
     $scope.managePersistence = (function() {
     	$scope.session.$on('loaded', function(session) {
@@ -30,31 +31,40 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
 	        // if we can find some place to check-in
 	        if(playerId)
 	        {
-	            $scope.players.$child(playerId).$update({
-	                hasJoinedGame: true
-	            });
+                //assign player to free player position on the server
+                $scope.player = $scope.players.$child(playerId);
+                
+                /*
+                    //ask the player for his/her name 
+                */
+                var ModalInstanceCtrl = function ($scope, $modalInstance, $clientScope) {
+                    $scope.submitNamePlayer = function(name) {
+                        $scope = $clientScope;
+                        $scope.player.$update({name: name});
+                        $scope.updatePlayerPersistence(playerId);
+                        $modalInstance.close();
+                    }
+                };
 
-	            // assign connected player to te scope
-	            $scope.player = $scope.players.$child(playerId);
-
-	            // create connection ref when player close browser or destroy session
-	            var myConnectionsRef = new Firebase(config.firebaseUrl + $routeParams.sessionId + '/players/' + playerId);
-	            var connectedRef = new Firebase(config.firebaseUrl + '.info/connected');
-	            connectedRef.on('value', function(snap) {
-	                if (snap.val() === true) {
-
-	                	// this player has to update its presence
-	                    myConnectionsRef.update({
-	                        hasJoinedGame: true
-	                    });
-
-	                    myConnectionsRef.onDisconnect().update({
-	                       	exercise: null,
-	                        hasJoinedGame: false
-	                    });
-	                }
-	            });
-	        }
+                if($scope.player.name === undefined)
+                {
+                    $modal.open({ templateUrl: 'myModalContent.html' , controller: ModalInstanceCtrl, resolve: {
+                        $clientScope: function() {
+                            return $scope;
+                        }
+                    }});
+                }
+                else
+                {
+                    $scope.updatePlayerPersistence(playerId);
+                }
+                
+                
+                /*
+                    //END ask the player for his/her name 
+                */
+      
+	        } // end playerId if
     	});
     })();
 
@@ -88,6 +98,28 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
 
         });
     })();
+
+    //update this presence
+    $scope.updatePlayerPersistence = function(playerId) {
+        $scope.player.$update({hasJoinedGame: true});
+        // create connection ref when player close browser or destroy session
+        var myConnectionsRef = new Firebase(config.firebaseUrl + $routeParams.sessionId + '/players/' + playerId);
+        var connectedRef = new Firebase(config.firebaseUrl + '.info/connected');
+        connectedRef.on('value', function(snap) {
+            if (snap.val() === true) {
+
+             // this player has to update its presence
+                myConnectionsRef.update({
+                    hasJoinedGame: true
+                });
+
+                myConnectionsRef.onDisconnect().update({
+                    exercise: null,
+                    hasJoinedGame: false
+                });
+            }
+        });
+    };       
     
     window.addEventListener('shake', shakeEventDidOccur, false);
 

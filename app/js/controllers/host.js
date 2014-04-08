@@ -159,6 +159,13 @@ app.filter("decode", function() {
     }
 });
 
+
+app.filter("randomArray", function() {
+    return function(array) {
+        return _.random(array, array.length - 1);
+    }
+});
+
 app.service('Factory', ['Time', 'Exercise', function(Time, Exercise) {
     return {
         getWorkoutTimes : function() {
@@ -171,30 +178,30 @@ app.service('Factory', ['Time', 'Exercise', function(Time, Exercise) {
         },
         getExercises : function() {
             return [
-                new Exercise( 'Kettlebelt Squat Push Press (alternating)' , ''),
+                new Exercise('Kettlebelt Squat Push Press (alternating)' , ''),
                 new Exercise('Jump Slam Battle Rope', ''),
                 new Exercise('Forward Lunge (alternating)', ''),
                 new Exercise('Backward Lunge (alternating)', ''),
                 new Exercise('Plyometric Jump', ''),
                 new Exercise('Split Jump', ''),
-                new Exercise( 'Mountain Climbers' , ''),
-                new Exercise( 'Push Ups' , ''),
-                new Exercise( 'Burpees' , ''),
-                new Exercise( 'Air Squat' , ''),
-                new Exercise( 'Frog Hop' , ''),
+                new Exercise('Mountain Climbers' , ''),
+                new Exercise('Push Ups' , ''),
+                new Exercise('Burpees' , ''),
+                new Exercise('Air Squat' , ''),
+                new Exercise('Frog Hop' , ''),
                 new Exercise('Dumbell Squat Push Press', ''),
                 new Exercise('Rope Skipping', ''),
                 new Exercise('Squat Thrust', ''),
                 new Exercise('Deadlift', ''),
-                new Exercise( 'Kettlebelt Swing' , ''),
-                new Exercise( 'Farmer Carry' , ''),
-                new Exercise( 'Sit Ups' , ''),
-                new Exercise( 'Squat Deck' , ''),
+                new Exercise('Kettlebelt Swing' , ''),
+                new Exercise('Farmer Carry' , ''),
+                new Exercise('Sit Ups' , ''),
+                new Exercise('Squat Deck' , ''),
                 new Exercise('Left&Right Battle Rope', ''),
-                new Exercise( 'Prisoner Push Ups' , ''),
-                new Exercise( 'Prisoner Squat' , ''),
-                new Exercise( 'Squat Jump' , ''),
-                new Exercise( 'Bear Crawl' , ''),
+                new Exercise('Prisoner Push Ups' , ''),
+                new Exercise('Prisoner Squat' , ''),
+                new Exercise('Squat Jump' , ''),
+                new Exercise('Bear Crawl' , ''),
                 new Exercise('Deadlift High Pull', '')
             ]
         },
