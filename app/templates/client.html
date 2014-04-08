@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <h1 class="text-info"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
-                <div class="alert alert-warning">Wait for your challenger...</div>
+                <div class="alert alert-warning"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Wait for your challenger...</div>
             </div>
         </div>
 
@@ -17,7 +17,8 @@
        <div class="row">
             <div class="col-md-12 text-center">
                 <h1 class="text-info"><i class="glyphicon glyphicon-user"></i>&nbsp; {{player.id}}</h1>
-                <div class="alert alert-info">Please choose your workout time</div>
+                <h3>Please choose your workout time</h3>
+                <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign"></i>&nbsp; Check the main screen</div>
             </div>
        </div>
     </div>
@@ -45,7 +46,7 @@
                         <!-- if isMobile() -->
                             <div ng-if="isMobile()">
                                 <img style="display:inline;" src="images/shake-instruction.png" alt="Shake to get your exercise"> 
-                                <div class="alert alert-info" ng-click="requestExercise()">Or press to shake</div>                 
+                                <div class="alert alert-warning" ng-click="requestExercise()"><i class="glyphicon glyphicon-hand-up"></i>&nbsp; Or tap here to shake</div>                   
                             </div>
                         <!-- END -->
 
@@ -67,7 +68,7 @@
                             <!-- if isMobile() -->
                             <div ng-if="isMobile()">
                                 <img style="display:inline;" src="images/shake-instruction.png" alt="Shake to get your exercise">
-                                <div class="alert alert-info" ng-click="requestExercise()">Or press to shake</div>               
+                                <div class="alert alert-warning" ng-click="requestExercise()"><i class="glyphicon glyphicon-hand-up"></i>&nbsp; Or tap here to shake</div>               
                                 <!-- <div class="alert alert-info">Shake your phone!</div>                    -->
                             </div>
                             <!-- END -->
@@ -80,6 +81,7 @@
 
                         <!-- GO IN TO THE REPETITION MODE -->
                         <div ng-if="player.exercise.time">
+                            <div class="alert alert-info"><i class="glyphicon glyphicon-info-sign"></i>&nbsp; Check the main screen</div>
                             <p class="text-danger" style="font-size: 60px;"><i class="glyphicon glyphicon-time" ></i>&nbsp; {{timeLeft}}</p>
                         </div>
                         <!-- END -->

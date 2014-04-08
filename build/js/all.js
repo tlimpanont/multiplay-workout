@@ -157,7 +157,7 @@ app.controller('ClientCtrl', ['$scope', '$routeParams', 'config', '$firebase', '
      /*===== INTERACTIVITY HANDLERS ===== */
     $scope.requestExercise = function() {
     	var exercise = Factory.generateRandomExercise(); 
-        if(confirm('Ready to do ' + exercise.name + '?'))
+        if(confirm('Check the main screen to see your exercise'))
         {
             $scope.player.$update({
                 exercise: exercise
