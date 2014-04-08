@@ -153,6 +153,15 @@ app.controller('HostCtrl', ['$scope', '$routeParams', 'config', '$firebase', 'Pl
 
 }]);
 
+app.directive("centered", function() {
+  return {
+        restrict : "ECA",
+        transclude : true,
+        template : "<div class='angular-center-container'><div class='angular-centered' ng-transclude></div></div>"
+    };
+});
+
+
 app.filter("decode", function() {
     return function(url) {
         return decodeURIComponent(url);
